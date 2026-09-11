@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ludo Web App - Vs Computer</title>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Extracted stylesheet -->
+    <link rel="stylesheet" href="ludo.css">
+</head>
+<body>
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <div class="user-info">
+            <div class="avatar" id="user-avatar">?</div>
+            <div>
+                <div id="user-name" style="font-weight: bold; font-size: 14px;">Not Logged In</div>
+                <div id="user-status" style="font-size: 11px; color: #00e676;">Please Login</div>
+            </div>
+        </div>
+        <div style="font-weight: bold; color: #ffe600; font-size: 18px;">
+            <i class="fa-solid fa-crown"></i> LUDO
+        </div>
+    </div>
+
+    <!-- MAIN APP SCREEN AREA -->
+    <div class="main-container">
+
+        <!-- 1. LOGIN SCREEN -->
+        <div id="login-screen" class="screen active">
+            <h2 class="login-title">Ludo Empire</h2>
+
+            <!-- Side By Side Gmail & Facebook Buttons -->
+            <div class="social-login-row">
+                <button class="btn-social btn-google" onclick="handleGoogleLogin()">
+                    <i class="fa-brands fa-google"></i> Gmail
+                </button>
+                <button class="btn-social btn-facebook" onclick="handleFacebookLogin()">
+                    <i class="fa-brands fa-facebook-f"></i> Facebook
+                </button>
+            </div>
+
+            <!-- Play Guest Button Below -->
+            <button class="btn-guest" onclick="handleGuestLogin()">
+                <i class="fa-solid fa-user-ninja"></i> Play as Guest
+            </button>
+
+            <div class="login-loading" id="login-loading">Signing you in...</div>
+            <div class="login-error" id="login-error"></div>
+        </div>
+
+        <!-- 2. GAME MENU (Vs Computer) -->
+        <div id="menu-screen" class="screen">
+            <h2 style="margin-bottom: 20px; color: #ffe600;">Select Mode</h2>
+            <button class="btn-guest" style="margin-bottom: 15px;" onclick="startVsComputer()">
+                <i class="fa-solid fa-robot"></i> Play vs Computer
+            </button>
+        </div>
+
+        <!-- 3. GAMEPLAY BOARD SCREEN -->
+        <div id="game-screen" class="screen" style="max-width: 450px;">
+            <div class="game-wrapper">
+                <div class="ludo-board">
+                    <!-- Red Base (User) -->
+                    <div class="home-red">
+                        <div class="inner-box">
+                            <div class="pawn-spot"><div class="pawn pawn-user"></div></div>
+                            <div class="pawn-spot"><div class="pawn pawn-user"></div></div>
+                            <div class="pawn-spot"><div class="pawn pawn-user"></div></div>
+                            <div class="pawn-spot"><div class="pawn pawn-user"></div></div>
+                        </div>
+                    </div>
+                    <!-- Green Base (Computer) -->
+                    <div class="home-green">
+                        <div class="inner-box">
+                            <div class="pawn-spot"><div class="pawn pawn-bot"></div></div>
+                            <div class="pawn-spot"><div class="pawn pawn-bot"></div></div>
+                            <div class="pawn-spot"><div class="pawn pawn-bot"></div></div>
+                            <div class="pawn-spot"><div class="pawn pawn-bot"></div></div>
+                        </div>
+                    </div>
+                    <!-- Yellow Base Placeholder -->
+                    <div class="home-yellow"></div>
+                    <!-- Blue Base Placeholder -->
+                    <div class="home-blue"></div>
+                    <!-- Center Winning Spot -->
+                    <div class="center-home">HOME</div>
+                </div>
+
+                <!-- Dice and Turn Logic -->
+                <div class="controls-panel">
+                    <div class="turn-indicator" id="turn-text">Your Turn!</div>
+                    <div class="dice-box" id="dice" onclick="rollDice()">🎲</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- SETTINGS MODAL -->
+    <div class="modal" id="settings-modal">
+        <div class="modal-content">
+            <div class="modal-header">Settings</div>
+
+            <div class="setting-option">
+                <span>Sound Effects</span>
+                <input type="checkbox" checked>
+            </div>
+            <div class="setting-option">
+                <span>Music</span>
+                <input type="checkbox" checked>
+            </div>
+
+            <!-- Dynamic Login/Logout Button -->
+            <div id="auth-action-container">
+                <!-- Javascript will inject Login or Logout button here -->
+            </div>
+
+            <button class="btn-close" onclick="toggleSettings()">Close</button>
+        </div>
+    </div>
+
+    <!-- BOTTOM BAR -->
+    <div class="bottom-bar">
+        <div class="nav-item active" onclick="showScreen('menu-screen')">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+        </div>
+        <div class="nav-item" onclick="startVsComputer()">
+            <i class="fa-solid fa-gamepad"></i>
+            <span>Vs Bot</span>
+        </div>
+        <div class="nav-item" onclick="toggleSettings()">
+            <i class="fa-solid fa-gear"></i>
+            <span>Settings</span>
+        </div>
+    </div>
+
+    <!-- Firebase SDK (compat build - works with plain <script> tags, no bundler needed) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+
+    <!-- App logic -->
+    <script src="lodo.js"></script>
+</body>
+</html>
